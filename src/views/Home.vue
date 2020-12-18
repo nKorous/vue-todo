@@ -19,13 +19,15 @@
             <th style='width: 75px;'>ID</th>
             <th style='width: 350px;'>Name</th>
             <th style='width: 75px; padding-left: 3px; padding-right: 3px'>Completed</th>
+            <th style='width: 100px;'>Delete</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="d in todo" :key="d.id">
             <td>{{ d.id }}</td>
             <td>{{ d.taskName }}</td>
-            <td><input type="checkbox" v-bind:checked="d.completed" /></td>
+            <td style='text-align: center'><input type="checkbox" v-bind:checked="d.completed" /></td>
+            <td style='text-align: center'><button class='clearButton' @click='deleteTodo(d.id)'>Delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -38,7 +40,7 @@
   overflow-y: auto;
   border: 4px double black;
   max-height: 200px;
-  width: 500px;
+  width: 600px;
   margin-top: 10px;
 }
 
@@ -112,11 +114,6 @@ export default class Home extends Vue {
   deleteTodo(id: number) {
     const newT = this.todo.filter((t) => t.id !== id);
     this.todo = [...newT];
-    this.$props.numToDo(this.todo.length);
-  }
-
-  updateCompleted(id: number) {
-    this.todo = [];
   }
 
   clearAllTasks() {
