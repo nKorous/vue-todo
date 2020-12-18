@@ -6,7 +6,7 @@
         <input type="text" v-model="taskName" />
       </label>
 
-      <button class="taskButton" @click="addTodo(taskName)">Add Task</button>
+      <button class="taskButton addButton" @click="addTodo(taskName)">Add Task</button>
       <button class="taskButton clearButton" @click="clearAllTasks()">Clear All Tasks</button>
     </div>
 
@@ -18,7 +18,7 @@
           <tr>
             <th style='width: 75px;'>ID</th>
             <th style='width: 350px;'>Name</th>
-            <th style='width: 75px;'>Completed</th>
+            <th style='width: 75px; padding-left: 3px; padding-right: 3px'>Completed</th>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +59,14 @@
   margin-top: 5px;
 }
 
+.addButton {
+    color: white;
+  background-color: green;
+  border: 2px ridge green;
+  box-shadow: 1px 1px 1px 1px lightgray;
+  border-radius: 3px;
+}
+
 .clearButton {
   color: white;
   background-color: red;
@@ -77,19 +85,12 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({
-  components: {},
-  props: {
-    numToDo: () => (num: number) => {
-      return num;
-    },
-  },
-})
+@Component({})
 export default class Home extends Vue {
   curId = 1;
   taskName = ''
   showError = false
-  taskNameError = 'Please enter a valid task name'
+  taskNameError = 'Please enter a valid task name.'
   todo: Array<{
     id: number;
     taskName: string;
@@ -119,9 +120,10 @@ export default class Home extends Vue {
   }
 
   clearAllTasks() {
-    const x = prompt("You are about to clear all tasks. To confirm, type DELETE");
+    const x = prompt("You are about to clear all tasks. To confirm, type DELETE.");
     if(x === 'DELETE' || x === 'delete') {
       this.todo = []
+      this.curId = 1
     }
   }
 }
